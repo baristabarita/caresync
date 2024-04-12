@@ -1,0 +1,1 @@
+# CareSync: A simple HealthCare Management System for Doctors
