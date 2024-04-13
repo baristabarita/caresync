@@ -1,1 +1,1 @@
-# CareSync: A simple Patient Record Management System for Doctors
+# CareSync: A simple Appointment Record Management System for Doctors
