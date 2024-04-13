@@ -21,9 +21,9 @@ function App() {
 
         {/* Doctor Page Routes */}
         <Route path="doctor" element={<DoctorLayout />}>
-          <Route index element={<DoctorDashboard />} />
-          <Route path="doctorrecords" element={<RecordsPage />} />
-          <Route path="doctorrecords/record" element={<ViewRecordPage />} />
+          <Route index element={<DoctorDashboard />} /> {/* localhost/doctor */}
+          <Route path="doctorrecords" element={<RecordsPage />} /> {/* localhost/doctor/doctorrecords */}
+          <Route path="doctorrecords/record" element={<ViewRecordPage />} /> {/* localhost/doctor/doctorrecords/record */}
         </Route>
       </Routes>
     </BrowserRouter>
