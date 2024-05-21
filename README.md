@@ -66,7 +66,7 @@ npm start
 
 ## Pulling and Code Review
 ---
-1. When you clone the repository, make sure you are in the `main` branch. You can check by running this command:
+1. When you clone the repository, make sure you are in the `mainh` branch. You can check by running this command:
 ```
 git status
 ```
@@ -81,26 +81,22 @@ nothing to commit, working tree clean
 ```
 git pull
 ```
-3. When you have finished adding your changes, create a branch using the `Card Number` on your assigned task in [Trello]()
+3. When you have finished adding your changes, make sure you are in your respective `name-branch` branch()
 ```
 Example for #3:
-//1. Create Branch using the command bellow
-$ git branch ticket-12
 
-//2. Check if the branch was created
-$ git branch
-ticket-12
-* master
+//1. Switch to respective branch
+$ git checkout name-branch
 
-//3. Switch to the newly created branch
-$ git checkout ticket-12
+//2. Check Branch using the command bellow
+$ git status
 
-//4. Repeat Step 2
+//3. Check if in the branch 
 $ git branch
 * ticket-12
 master
 
-//5. Commit your files and either push or pull the changes
+//4. Commit your files and either push or pull the changes
 $ git add .
 
 $ git commit -m "Testing Push and Pull Request"
@@ -108,5 +104,3 @@ $ git commit -m "Testing Push and Pull Request"
 $ git push
 
 ```
-4. Send the pull review link of the new changes you added to the project. The format should look like the link bellow:
-`https://github.com/baristabarita/caresync/pull/12`
