@@ -150,27 +150,17 @@ describe('recordsController', () => {
     });
 
     test('should view a record by ID and return 200 status', async () => {
-        // Mock req object with params
-        req.params = { record_id: 1, doctor_id: 1};
-        res = { 
-            status: jest.fn().mockReturnThis(), 
-            json: jest.fn()
-        };
-
-
-        const mockRecord = { id: 1, patient_name: "Test Patient", patient_age: 30, doctor_id: 1};
+        req.params = { doctor_id: 1, record_id: 1 };
+        const mockRecord = { id: 1, patient_name: "Test Patient", patient_age: 30, doctor_id: 1 };
     
-        // Mock RecordsModel.getRecordById function
-        RecordsModel.getRecordById.mockImplementation((record_id, doctor_id, callback) => {
-            callback(null, mockRecord);
+        RecordsModel.getRecordById.mockImplementation((doctor_id, record_id, callback) => {
+            const records = [mockRecord]; // Array with one record
+            callback(null, records);
         });
-
     
-        // Call viewRecordById with req and res
         await viewRecordById(req, res);
     
-        // Assert that status and json methods are called with correct values
         expect(res.status).toHaveBeenCalledWith(200);
-        expect(res.json).toHaveBeenCalledWith(mockRecord);
+        expect(res.json).toHaveBeenCalledWith(mockRecord); // Expect the first record in the array
     });
 });
