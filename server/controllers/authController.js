@@ -76,6 +76,7 @@ const logout = (req, res) => {
 };
 
 module.exports = {
+    generateTokens,
     register,
     login,
     refreshToken,
