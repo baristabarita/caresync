@@ -69,27 +69,6 @@ describe('recordsController', () => {
         expect(res.json).toHaveBeenCalledWith(mockRecords)
     });
 
-    // test('view record by ID w/ status 200', () => {
-    //     const mockRecord = { id: 1, patient_name: "Test Patient", patient_age: 30, doctor_id: 1 };
-    //     function callback(error, data) {
-    //         if (error) {
-    //           done(error);
-    //           return;
-    //         }
-    //         try {
-    //           expect(data).toBe(
-    //             mockRecord
-    //           );
-    //           done();
-    //         } catch (error) {
-    //           done(error);
-    //         }
-    //       }
-        
-    //       viewRecordById(callback);
-    //     });
-
-
     test('should view a record by ID and return 200 status', async () => {
         // Mock req object with params
         const req = { params: { record_id: 1, doctor_id: 1} };
