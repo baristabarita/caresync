@@ -50,7 +50,7 @@ const viewRecordsByDoctorId = (req, res) => {
 
 const editRecord = (req, res) => {
     const { doctor_id, record_id } = req.params;
-    console.log(req.params)
+    //console.log(req.params)
     RecordsModel.updateRecord(doctor_id, record_id, req.body, (error, results) => {
         
         if (error) {

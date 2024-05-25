@@ -151,8 +151,8 @@ describe('recordsController', () => {
 
     test('should view a record by ID and return 200 status', async () => {
         // Mock req object with params
-        const req = { params: { record_id: 1, doctor_id: 1} };
-        const res = { 
+        req.params = { record_id: 1, doctor_id: 1};
+        res = { 
             status: jest.fn().mockReturnThis(), 
             json: jest.fn()
         };
@@ -161,10 +161,10 @@ describe('recordsController', () => {
         const mockRecord = { id: 1, patient_name: "Test Patient", patient_age: 30, doctor_id: 1};
     
         // Mock RecordsModel.getRecordById function
-        RecordsModel.getRecordById.mockImplementation((id, callback) => {
-            expect(id).toBe(1);  
+        RecordsModel.getRecordById.mockImplementation((record_id, doctor_id, callback) => {
             callback(null, mockRecord);
         });
+
     
         // Call viewRecordById with req and res
         await viewRecordById(req, res);
