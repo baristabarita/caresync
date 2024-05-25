@@ -6,7 +6,7 @@ jest.mock('../../db/dbConfig', () => ({
     getConnection: jest.fn().mockImplementation((callback) => {
         callback(null, {
             query: jest.fn((sql, params, callback) => {
-                callback(null, { affectedRows: 1, insertId: 1 });  // Simulate successful function operation
+                callback(null, { affectedRows: 1, insertId: 1, rows:[] });  // Simulate successful function operation
             }),
             release: jest.fn()
         });
@@ -135,5 +135,32 @@ describe('recordsController', () => {
         expect(res.json).toHaveBeenCalledWith({
             message: "Record not found",
         })
+    });
+    test('should view all records and return 200 status', async () => {
+        const mockRecords = [
+            { id: 1, patient_name: "Test Patient", patient_age: 30 },
+            { id: 2, patient_name: "Test Patient 2", patient_age: 25 }
+        ];
+        RecordsModel.getAllRecords.mockImplementation((callback) => callback(null, mockRecords));
+
+        await viewRecords(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith(mockRecords)
+    });
+
+    test('should view a record by ID and return 200 status', async () => {
+        req.params = { doctor_id: 1, record_id: 1 };
+        const mockRecord = { id: 1, patient_name: "Test Patient", patient_age: 30, doctor_id: 1 };
+    
+        RecordsModel.getRecordById.mockImplementation((doctor_id, record_id, callback) => {
+            const records = [mockRecord]; // Array with one record
+            callback(null, records);
+        });
+    
+        await viewRecordById(req, res);
+    
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith(mockRecord); // Expect the first record in the array
     });
 });

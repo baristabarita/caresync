@@ -1,6 +1,8 @@
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { generateTokens, refreshToken, logout} = require('../../controllers/authController');
+const { login, register, generateTokens, refreshToken, logout} = require('../../controllers/authController');
 const UserModel = require('../../models/userModel');
+const {insertUser} = require('../../models/userModel');
 
 
 //mocking the database
@@ -20,7 +22,7 @@ jest.mock('jsonwebtoken', () => ({
     sign: jest.fn(),
     verify: jest.fn()
 }));
-
+jest.mock('bcrypt')
 describe('authController', () => {
     let req, res;
     
@@ -38,6 +40,148 @@ describe('authController', () => {
             send: jest.fn().mockReturnThis()
         };
         jest.clearAllMocks();
+    });
+
+    test('should successfully register an account', async () => {
+        const req = {
+            body: {
+                fname: 'John',
+                lname: 'Doe',
+                profession: 'Engineer',
+                contact_number: '1234567890',
+                email_address: 'jdoe123@gmail.com',
+                password: 'password123'
+            }
+        };
+    
+        const hashedPassword = 'hashedPassword123';
+        const accessToken = 'accessToken123';
+        const refreshToken = 'refreshToken123';
+    
+        bcrypt.hash.mockResolvedValue(hashedPassword);
+        UserModel.insertUser.mockImplementation(() => ({
+            save: jest.fn().mockResolvedValue({
+                _id: '1',
+                fname: 'John',
+                lname: 'Doe',
+                email_address: 'jdoe123@gmail.com'
+            })
+        }));
+        jwt.sign.mockImplementation((payload, secret, options) => {
+            if (secret === process.env.ACCESS_TOKEN_SECRET) return accessToken;
+            if (secret === process.env.REFRESH_TOKEN_SECRET) return refreshToken;
+        });
+    
+        await register(req, res);
+    
+        expect(bcrypt.hash).toHaveBeenCalledWith(req.body.password, 10);
+        expect(jwt.sign).toHaveBeenCalledTimes(2);
+        expect(UserModel.insertUser).toHaveBeenCalled();
+        expect(UserModel.insertUser).toHaveBeenCalledTimes(1);
+        expect(res.status).toHaveBeenCalledWith(201);
+        expect(res.json).toHaveBeenCalledWith({
+            message: "User registered",
+            accessToken,
+            user: {
+                contact_number: req.body.contact_number,
+                fname: 'John',
+                lname: 'Doe',
+                email_address: 'jdoe123@gmail.com',
+                profession: req.body.profession
+            }
+        });
+    });
+
+    test('should login successfully when password is correct', async () => {
+        const req = {
+            body: {
+                email: 'jdoe123@gmail.com',
+                password: 'password123'
+            }
+        };
+    
+        const user = {
+            doctor_id: '1',
+            fname: 'John',
+            lname: 'Doe',
+            profession: 'Doctor',
+            contact_number: '1234567890',
+            email_address: 'jdoe123@gmail.com',
+            password: 'hashedPassword123'
+        };
+        const accessToken = 'accessToken123';
+        const refreshToken = 'refreshToken123';
+    
+        UserModel.findUserByEmail.mockResolvedValue(user);
+        bcrypt.compare.mockResolvedValue(true);
+       
+    
+        await login(req, res);
+    
+        expect(UserModel.findUserByEmail).toHaveBeenCalledWith(req.body.email);
+        expect(bcrypt.compare).toHaveBeenCalledWith(req.body.password, user.password);
+        expect(res.cookie).toHaveBeenCalledWith('refreshToken', accessToken, expect.objectContaining({
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'Strict'
+        }));
+        expect(res.json).toHaveBeenCalledWith({
+            accessToken,
+            user: {
+                doctorId: user.doctor_id,
+                fname: user.fname,
+                lname: user.lname,
+                profession: user.profession,
+                contactNumber: user.contact_number,
+                emailAddress: user.email_address
+            }
+        });
+    });
+
+    test('should fail to login when email does not exist', async () => {
+        const req = {
+            body: {
+                email: 'nonexistent@gmail.com',
+                password: 'password123'
+            }
+        };
+    
+        UserModel.findUserByEmail.mockResolvedValue(null); // No user found for the email
+    
+        await login(req, res);
+    
+        expect(UserModel.findUserByEmail).toHaveBeenCalledWith(req.body.email);
+        expect(res.status).toHaveBeenCalledWith(401);
+        expect(res.json).toHaveBeenCalledWith({ message: "Invalid credentials" });
+    });
+
+    test('should fail to login when password is incorrect', async () => {
+        const req = {
+            body: {
+                email: 'jdoe123@gmail.com',
+                password: 'wrongpassword'
+            }
+        };
+    
+        const user = {
+            doctor_id: '1',
+            fname: 'John',
+            lname: 'Doe',
+            profession: 'Doctor',
+            contact_number: '1234567890',
+            email_address: 'jdoe123@gmail.com',
+            password: 'hashedPassword123'
+        };
+    
+        UserModel.findUserByEmail.mockResolvedValue(user);
+        bcrypt.compare.mockResolvedValue(false);
+    
+        await login(req, res);
+    
+        expect(UserModel.findUserByEmail).toHaveBeenCalledWith(req.body.email);
+        expect(bcrypt.compare).toHaveBeenCalledWith(req.body.password, user.password);
+        expect(res.status).toHaveBeenCalledWith(401);
+        expect(res.json).toHaveBeenCalledWith({ message: "Invalid credentials" });
     });
 
     test('should correctly generate tokens', () => {

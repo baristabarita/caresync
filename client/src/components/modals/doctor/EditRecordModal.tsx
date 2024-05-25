@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import config from '@/common/config.ts';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -59,6 +59,9 @@ const EditRecordModal: React.FC<EditRecordModalProps> = ({ isOpen, onClose, reco
     }
   };
 
+  useEffect(()=>{
+    console.log(formData.visit_date)
+  },[formData])
   if (!isOpen) return null;
 
   return (
