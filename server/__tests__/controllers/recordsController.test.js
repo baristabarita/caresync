@@ -55,7 +55,87 @@ describe('recordsController', () => {
         });
     });
 
-    //insert the other functions and test scenarios
+    test('edit record and return 200 status', async () => {
+        req.params = {
+            doctor_id: 1,
+            record_id: 1
+        };
+
+        req.body = {
+            visit_date: "2024-01-01",
+            purpose: "Update purpose", 
+            diagnosis: "Update diagnosis", 
+            prescription: "Update prescription", 
+            record_status: "Complete"
+        };
+
+        RecordsModel.updateRecord.mockImplementation((doctor_id, record_id, data, callback) => callback (null, { affectedRows: 1 }));
+
+        await editRecord(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith({
+            message: "Record updated successfully"
+        });
+    })
+
+    test('should return 404 status if record to edit is not found', async () => {
+        req.params = {
+            doctor_id: 1,
+            record_id: 1
+        };
+        req.body = {
+            visit_date: "2024-05-24",
+            purpose: "Updated purpose",
+            diagnosis: "Updated diagnosis",
+            prescription: "Updated prescription",
+            record_status: "Complete"
+        };
+
+        RecordsModel.updateRecord.mockImplementation((doctor_id, record_id, data, callback) => callback(null, { affectedRows: 0 }));
+
+        await editRecord(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(404);
+        expect(res.json).toHaveBeenCalledWith({
+            message: "Record not found or no update made"
+        });
+    });
+
+    test('delete record and return 200 status',  async () => {
+        req.params = {
+            doctor_id: 1,
+            record_id: 1
+        };
+
+        RecordsModel.deleteRecord.mockImplementation((doctor_id, record_id, callback) => callback (null, { affectedRows: 1}));
+
+        await deleteRecord(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith({
+            message: "Record deleted successfully",
+            results: {
+                affectedRows: 1,
+            },
+        });
+    });
+
+    test('should return 404 status if record to delete is not found', () => {
+        req.params = {
+            doctor_id: 1,
+            record_id: 1
+        };
+
+        RecordsModel.deleteRecord.mockImplementation((doctor_id, record_id, callback) => callback (null, { affectedRows: 0}));
+
+        deleteRecord(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(404);
+        expect(res.json).toHaveBeenCalledWith({
+            message: "Record not found",
+        })
+    });
     test('should view all records and return 200 status', async () => {
         const mockRecords = [
             { id: 1, patient_name: "Test Patient", patient_age: 30 },
