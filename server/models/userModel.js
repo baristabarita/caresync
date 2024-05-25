@@ -8,7 +8,7 @@ const findUserByEmail = (email) => {
             if (error) {
                 reject(error);
             } else {
-                resolve(results.length > 0 ? results[0] : null);
+                resolve(results && results.length > 0 ? results[0] : null);
             }
         });
     });
