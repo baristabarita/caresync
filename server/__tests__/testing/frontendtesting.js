@@ -72,12 +72,12 @@ async function registerAccount() {
     }
 }
 
-async function login(){
+async function loginandlogout(){
     let driver = await new Builder().forBrowser('chrome').build();
     try {
         await driver.get('http://localhost:5173');
         driver.sleep(8000);
-        // Find the <button> element with the name attribute 'register-button'
+
         await driver
         .findElement(By.name("email"))
         .sendKeys("jdoe@gmail.com", Key.RETURN);
@@ -94,6 +94,14 @@ async function login(){
 
         await submitElement.click();
 
+        await new Promise((resolve) => {
+            setTimeout(resolve, 2000); // (3 second)
+        });
+        let logout = await driver.findElement(By.id('logout'));
+
+        // Click the <div> element
+        await logout.click();
+
     }catch(error){
         console.error(error);
     }finally{
@@ -109,5 +117,10 @@ async function login(){
 
     }
 }
-registerAccount();
-login();
+
+async function execute (){
+    registerAccount().then(()=>loginandlogout())
+}
+
+
+execute();

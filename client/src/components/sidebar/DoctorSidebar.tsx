@@ -78,6 +78,7 @@ const DoctorSidebar: React.FC<DoctorSidebarProps> = ({
         {isSidebarOpen && "Account Settings"}
       </div>
       <div
+        id="logout"
         className={`fixed bottom-[5%] ml-2 w-[15%] cursor-pointer flex items-center hover:text-primarylight`}
         onClick={handleLogout}
       >
