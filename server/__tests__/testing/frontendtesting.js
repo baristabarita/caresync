@@ -90,40 +90,49 @@ async function loginandlogout(){
             setTimeout(resolve, 1000); // (1 second)
         });
 
-        // let submitElement = await driver.findElement(By.css('button[type="submit"]'));
+        let submitElement = await driver.findElement(By.css('button'));
 
-        // await submitElement.click();
+        await submitElement.click();
 
-        // await new Promise((resolve) => {
-        //     setTimeout(resolve, 2000); // (3 second)
-        // });
-        // let logout = await driver.findElement(By.id('logout'));
+        await new Promise((resolve) => {
+            setTimeout(resolve, 2000);
+        });
 
-        // // Click the <div> element
-        // await logout.click();
+        //find logoout and click
+        let sidebarElement = await driver.findElement(By.id('sidebar'));
+        let logout = await sidebarElement.findElement(By.id('logout'));
+
+        // Click the <div> element
+        await logout.click();
+
+        // Delay
+        await new Promise((resolve) => {
+            setTimeout(resolve, 1000);
+        });
+
+        //wait for login button then go to addRecord
+        await driver.wait(until.elementLocated(By.css('button')), 10000);
+        await addRecord(driver);
 
     }catch(error){
         console.error(error);
     }finally{
         try{
         await new Promise((resolve) => {
-            setTimeout(resolve, 3000); // (3 second)
+            setTimeout(resolve, 3000); 
         });
         }catch(e){
             console.error(e)
         }
-
-    await driver.quit();
-
     }
 }
 
-async function addRecord () {
-    let driver = await new Builder().forBrowser('chrome').build();
+async function addRecord (driver) {
+    // let driver = await new Builder().forBrowser('chrome').build();
        
     try {
         //LOGIN
-        await driver.get('http://localhost:5173');
+        // await driver.get('http://localhost:5173');
         driver.sleep(8000);
 
         await driver
@@ -169,6 +178,11 @@ async function addRecord () {
         //confirm submit
         let submitButton = await driver.findElement(By.id('button-2'));
         await submitButton.click();
+
+        // Delay
+        await new Promise((resolve) => {
+            setTimeout(resolve, 1000);
+        });
 
     } catch (error) {
         console.error('An error occurred:', error);
@@ -221,6 +235,11 @@ async function editRecord (driver) {
         //click submit button
         let submitButton = await driver.findElement(By.id('confirm-button'));
         await submitButton.click();
+
+        // Delay
+        await new Promise((resolve) => {
+            setTimeout(resolve, 2000);
+        });
 
     } catch (error) {
         console.error('An error occurred:', error);
