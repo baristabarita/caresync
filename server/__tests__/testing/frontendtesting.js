@@ -90,7 +90,7 @@ async function loginandlogout(){
             setTimeout(resolve, 1000); // (1 second)
         });
 
-        let submitElement = await driver.findElement(By.css('button[type="submit"]'));
+        let submitElement = await driver.findElement(By.css('button'));
 
         await submitElement.click();
 
