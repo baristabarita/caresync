@@ -101,6 +101,7 @@ const ViewRecord: React.FC = () => {
       {/* top buttons */}
       <section className="flex justify-between mb-4">
         <h3
+          id="back-button"
           className="text-primary cursor-pointer py-[1%] font-bold flex items-center xl:max-2xl:text-[1.2em] xl:max-2xl:py-[0.5%]"
           onClick={() => navigate("/doctor/doctorrecords")}
         >
@@ -109,12 +110,14 @@ const ViewRecord: React.FC = () => {
         </h3>
         <div>
           <button
+            id="delete-button"
             className="mb-2 mr-2 px-4 py-2 bg-alert text-white hover:bg-red-500  rounded-lg font-bold"
             onClick={handleShowAlertModal}
           >
             Delete Record
           </button>
           <button
+            id="edit-button"
             className="mb-2 px-4 py-2 bg-primarydark text-white hover:bg-primarycolor hover:text-primarylight rounded-lg font-bold"
             onClick={() => setShowEditModal(true)}
           >

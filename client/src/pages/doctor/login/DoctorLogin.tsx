@@ -148,12 +148,13 @@ const DoctorLogin: React.FC = () => {
           </button>
           <div className="text-center text-sm mt-5">
             <span>Don't have an account? </span>
-            <Link
+            <button name="register-button"><Link
               to="/docregister"
               className="font-bold hover:text-primary transition-colors delay-250 duration-3000 ease-in"
             >
               Register Here
             </Link>
+            </button>
           </div>
         </form>
       </div>
