@@ -40,11 +40,13 @@ const DoctorSidebar: React.FC<DoctorSidebarProps> = ({
 
   return (
     <div
+      id = "sidebar"
       className={`h-screen fixed bg-primarydark text-[#B1B1B1] text-[1.2em] font-semibold p-4 flex flex-col items-start ${
         isSidebarOpen ? "w-60" : "w-16"
       } transition-all duration-300 ease-in-out`}
     >
       <div
+        id = "dashboard-tab"
         className={`mb-5 cursor-pointer flex items-center ${
           isPathActive("/doctor") && !isPathActive("/doctor/doctorrecords") && !isPathActive("/doctor/doctorsettings")
             ? "text-primarylight rounded"
@@ -56,6 +58,7 @@ const DoctorSidebar: React.FC<DoctorSidebarProps> = ({
         {isSidebarOpen && "Dashboard"}
       </div>
       <div
+        id = "appointments-tab"
         className={`mb-5 cursor-pointer flex items-center ${
           isPathActive("/doctor/doctorrecords")
             ? "text-primarylight rounded"
@@ -67,6 +70,7 @@ const DoctorSidebar: React.FC<DoctorSidebarProps> = ({
         {isSidebarOpen && "Appointments"}
       </div>
       <div
+        id = "settings-tab"
         className={`mb-5 cursor-pointer flex items-center ${
           isPathActive("/doctor/doctorsettings")
             ? "text-primarylight rounded"

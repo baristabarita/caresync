@@ -135,8 +135,8 @@ const AddRecordForm: React.FC = () => {
                   </select>
                 </div>
                 <div className="flex justify-center py-4">
-                  <button type="button" onClick={() => navigate("/doctor/doctorrecords")} className="bg-alert hover:bg-red-600 text-white p-2 rounded">Cancel</button>
-                  <button type="submit" className="bg-primary hover:bg-primarydark text-white p-2 rounded ml-4">Submit</button>
+                  <button id= 'cancel-button' type="button" onClick={() => navigate("/doctor/doctorrecords")} className="bg-alert hover:bg-red-600 text-white p-2 rounded">Cancel</button>
+                  <button id='submit-button' type="submit" className="bg-primary hover:bg-primarydark text-white p-2 rounded ml-4">Submit</button>
                 </div>
               </div>
             </form>

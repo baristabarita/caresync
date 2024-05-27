@@ -133,6 +133,7 @@ const EditRecordModal: React.FC<EditRecordModalProps> = ({ isOpen, onClose, reco
         {/* Action Buttons */}
         <div className="flex justify-end space-x-4 mt-6">
           <button
+            id= "close-button"
             type="button"
             onClick={onClose}
             className="text-gray-500 bg-transparent hover:bg-gray-200 hover:text-gray-700 rounded-md px-4 py-2"
@@ -140,6 +141,7 @@ const EditRecordModal: React.FC<EditRecordModalProps> = ({ isOpen, onClose, reco
             Cancel
           </button>
           <button
+            id= "confirm-button"
             type="submit"
             className="bg-primary text-white hover:bg-primarydark rounded-md px-4 py-2"
           >
