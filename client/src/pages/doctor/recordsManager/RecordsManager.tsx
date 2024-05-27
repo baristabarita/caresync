@@ -150,6 +150,7 @@ const RecordsManager: React.FC = () => {
         {/* add new record button */}
         <div>
           <button
+            id= "add-button"
             onClick={handleNewRecord}
             className="btn btn-sm px-4 py-2 rounded-md bg-primary text-white hover:bg-primarydark hover:text-primarylight btn-primary"
           >
@@ -218,7 +219,8 @@ const RecordsManager: React.FC = () => {
                     </div>
                   </td>
                   <td className="py-4 px-6 flex justify-center items-center">
-                    <button 
+                    <button
+                    id= 'details-button' 
                     onClick={() => handleViewDetails(record.record_id)}
                     className="font-bold px-4 py-1 rounded-lg bg-primarylight text-primarydark hover:underline mr-2">
                       View Details

@@ -39,12 +39,14 @@ const CustomConfirmationModal: React.FC<CustomConfirmationModalProps> = ({
                 </div>
                 <div className="flex justify-evenly pb-4">
                     <button
+                        id= "button-1"
                         onClick={buttonOneOnClick}
                         className="font-roboto button text-primarydark p-[0.7em] w-[45%] rounded-full border-solid border-2 border-primarydark font-bold hover:bg-primarydark hover:text-primarylight transition-colors delay-250 duration-[3000] ease-in"
                     >
                         {buttonOneText}
                     </button>
                     <button
+                        id= "button-2"
                         onClick={buttonTwoOnClick}
                         className="button bg-primarydark text-white p-[0.5em] w-[45%] rounded-full hover:bg-primary hover:text-primarydark font-bold transition-colors delay-250 duration-[3000] ease-in"
                     >
