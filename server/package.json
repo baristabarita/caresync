@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "start": "nodemon index",
-    "ftest": "node __tests__/testing/frontendtesting.js"
+    "ftest": "node __frontendtests__/frontendtesting.js"
   },
   "keywords": [],
   "author": "",
@@ -21,9 +21,9 @@
     "express-session": "^1.18.0",
     "joi": "^17.12.3",
     "jsonwebtoken": "^9.0.2",
+    "mocha": "10.4.0",
     "mysql": "^2.18.1",
-    "selenium-webdriver": "^4.21.0",
-    "mocha": "10.4.0"
+    "selenium-webdriver": "^4.21.0"
   },
   "devDependencies": {
     "jest": "^29.7.0",
