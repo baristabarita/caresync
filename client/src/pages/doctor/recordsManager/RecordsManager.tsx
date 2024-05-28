@@ -43,6 +43,7 @@ const RecordsManager: React.FC = () => {
       try {
         const userDetails: User = JSON.parse(userDetailsString);
         setUser(userDetails);
+        console.log(user)
         if (userDetails.doctorId) {
           fetchRecords(userDetails.doctorId);
         }

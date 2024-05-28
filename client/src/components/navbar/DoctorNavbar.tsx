@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { FaBars, FaUserCircle } from "react-icons/fa";
 import logo from "@/assets/icons/logo-title.png";
 
@@ -10,6 +10,7 @@ interface DoctorNavbarProps {
 const DoctorNavbar: React.FC<DoctorNavbarProps> = ({ toggleSidebar, isSidebarOpen }) => {
   return (
     <nav className="bg-primarydark text-white p-4 flex justify-between items-center shadow-2xl">
+      {isSidebarOpen}
       <div className="flex items-center">
         <button
           onClick={toggleSidebar}

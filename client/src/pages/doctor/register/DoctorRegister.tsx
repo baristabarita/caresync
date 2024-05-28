@@ -17,9 +17,9 @@ interface RegisterFormData {
   confirmPassword: string;
 }
 
-interface ErrorResponse {
-  errors: string[];
-}
+// interface ErrorResponse {
+//   errors: string[];
+// }
 
 const DoctorRegister: React.FC = () => {
   const navigate = useNavigate();

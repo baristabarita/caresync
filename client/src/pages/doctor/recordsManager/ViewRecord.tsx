@@ -92,9 +92,9 @@ const ViewRecord: React.FC = () => {
     setShowAlertModal(false);
   };
 
-  const handleRecordUpdate = (updatedRecord: Record) => {
-    setRecord(updatedRecord);  // Update the local state with the new record data
-  };
+  // const handleRecordUpdate = (updatedRecord: Record) => {
+  //   setRecord(updatedRecord);  // Update the local state with the new record data
+  // };
 
   return (
     <div className="animate-fade-in p-5">

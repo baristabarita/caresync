@@ -5,7 +5,7 @@ import DoctorPieChart from "@/components/charts/doctor/DoctorPieChart";
 import { BiSolidDashboard } from "react-icons/bi";
 import { FaHourglass, FaUserFriends, FaBookMedical } from "react-icons/fa";
 import { FaMoneyBills } from "react-icons/fa6";
-import { LuUserX } from "react-icons/lu";
+//import { LuUserX } from "react-icons/lu";
 
 interface User {
   doctorId: number;
@@ -50,6 +50,30 @@ const Dashboard: React.FC = () => {
       try {
         const userDetails = JSON.parse(userDetailsString);
         setUser(userDetails);
+        setPendingAppointments([
+          {
+            id: "PT121",
+            patient_name: "Jojo Satoru",
+            gender: "Male",
+            reason: "Waste Pain",
+            sent_date: "2024-04-04",
+          },
+          {
+              id: "PT122",
+              patient_name: "Gawr Gura",
+              gender: "Female",
+              reason: "Migraines",
+              sent_date: "2024-04-08",
+            },
+            {
+              id: "PT123",
+              patient_name: "Ashley Kane",
+              gender: "Female",
+              reason: "Loss of voice",
+              sent_date: "2024-04-09",
+            },
+            
+        ])
       } catch (error) {
         console.error("Error parsing user details from localStorage:", error);
         // Clear corrupted data
